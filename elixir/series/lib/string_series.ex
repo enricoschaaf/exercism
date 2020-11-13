@@ -5,13 +5,14 @@ defmodule StringSeries do
   return an empty list.
   """
   @spec slices(s :: String.t(), size :: integer) :: list(String.t())
+
+  def slices(_s, size) when size < 1 do
+    []
+  end
+
   def slices(s, size) do
-    if size > 0 do
-      String.codepoints(s)
-      |> Enum.chunk_every(size, 1, :discard)
-      |> Enum.map(&Enum.join/1)
-    else
-      []
-    end
+    String.codepoints(s)
+    |> Enum.chunk_every(size, 1, :discard)
+    |> Enum.map(&Enum.join/1)
   end
 end
