@@ -6,13 +6,8 @@ defmodule Acronym do
   @spec abbreviate(String.t()) :: String.t()
   def abbreviate(string) do
     string
-    |> String.replace(
-      ~r/[a-z][A-Z]/,
-      &"#{String.first(&1)} #{String.last(&1)}"
-    )
-    |> String.split([" ", "-", "_"])
-    |> Enum.map(&String.first/1)
-    |> Enum.join()
+    |> String.split(~r/(-|_|\s|[a-z](?=[A-Z]))/, trim: true)
+    |> Enum.reduce("", &(&2 <> String.first(&1)))
     |> String.upcase()
   end
 end
