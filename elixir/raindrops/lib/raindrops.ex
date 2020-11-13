@@ -10,5 +10,10 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t()
   def convert(number) do
+    ""
+    |> (&if(rem(number, 3) == 0, do: &1 <> "Pling", else: &1)).()
+    |> (&if(rem(number, 5) == 0, do: &1 <> "Plang", else: &1)).()
+    |> (&if(rem(number, 7) == 0, do: &1 <> "Plong", else: &1)).()
+    |> (&if(&1 == "", do: "#{number}", else: &1)).()
   end
 end
