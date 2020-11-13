@@ -6,12 +6,11 @@ defmodule StringSeries do
   """
   @spec slices(s :: String.t(), size :: integer) :: list(String.t())
 
-  def slices(_s, size) when size < 1 do
-    []
-  end
+  def slices(_s, size) when size < 1, do: []
 
   def slices(s, size) do
-    String.codepoints(s)
+    s
+    |> String.codepoints()
     |> Enum.chunk_every(size, 1, :discard)
     |> Enum.map(&Enum.join/1)
   end
