@@ -11,9 +11,15 @@ defmodule Raindrops do
   @spec convert(pos_integer) :: String.t()
   def convert(number) do
     ""
-    |> (&if(rem(number, 3) == 0, do: &1 <> "Pling", else: &1)).()
-    |> (&if(rem(number, 5) == 0, do: &1 <> "Plang", else: &1)).()
-    |> (&if(rem(number, 7) == 0, do: &1 <> "Plong", else: &1)).()
-    |> (&if(&1 == "", do: "#{number}", else: &1)).()
+    |> match(:pling, number)
+    |> match(:plang, number)
+    |> match(:plong, number)
+    |> match(:default, number)
   end
+
+  defp match(str, :pling, number) when rem(number, 3) == 0, do: str <> "Pling"
+  defp match(str, :plang, number) when rem(number, 5) == 0, do: str <> "Plang"
+  defp match(str, :plong, number) when rem(number, 7) == 0, do: str <> "Plong"
+  defp match("", :default, number), do: Integer.to_string(number)
+  defp match(str, _, _number), do: str
 end

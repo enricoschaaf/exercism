@@ -7,7 +7,13 @@ defmodule RunLengthEncoder do
   "2A3B4C" => "AABBBCCCC"
   """
   @spec encode(String.t()) :: String.t()
+
+  def encode("") do
+    ""
+  end
+
   def encode(string) do
+    string |> String.codepoints() |> List.zip()
   end
 
   @spec decode(String.t()) :: String.t()
