@@ -19,9 +19,7 @@ defmodule RunLengthEncoder do
     |> Enum.map_join(&construct/1)
   end
 
-  defp construct([head | []]) do
-    head
-  end
+  defp construct([head | []]), do: head
 
   defp construct([head | tail]) do
     "#{Enum.count(tail) + 1}#{head}"
