@@ -3,23 +3,19 @@ defmodule Prime do
   Generates the nth prime.
   """
   @spec nth(non_neg_integer) :: non_neg_integer
-  def nth(count) do
-    nth_recursion(count, 2, 3)
+  def nth(1) do
+    2
   end
 
-  defp nth_recursion(1, nth, _) do
-    nth
+  def nth(count) when count > 0 do
+    Stream.iterate(3, &(&1 + 2))
+    |> Stream.filter(&prime?/1)
+    |> Enum.take(count - 1)
+    |> List.last()
   end
 
-  defp nth_recursion(count, nth, i) when count > 0 do
-    if prime?(i) do
-      nth_recursion(count - 1, i, i + 2)
-    else
-      nth_recursion(count, nth, i + 2)
-    end
-  end
-
-  defp prime?(number) do
-    !Enum.any?(2..(Kernel.floor(number / 2) + 1), &(rem(number, &1) == 0))
-  end
+  defp prime?(n), do: prime?(n, 3)
+  defp prime?(n, k) when n < k * k, do: true
+  defp prime?(n, k) when rem(n, k) == 0, do: false
+  defp prime?(n, k), do: prime?(n, k + 2)
 end
